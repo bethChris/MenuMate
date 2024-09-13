@@ -26,21 +26,6 @@ class MenuManager():
                     action.run()
 
 
-        # while stack is not empty
-        # pop menu off stack
-        # get action from menu
-        # if action is not quit
-            # if action is menuItem
-                # push current menu back on stack
-                # perform action
-            # if action is a menu 
-                # push current and next menu on stack
-            # if action is back
-                # don't put current menu back on stack
-        # else
-            # sys.quit 
-
-
 # TODO: turn all this junk into test cases
 def tester1():
     print("Whats up yooooo")
@@ -48,18 +33,18 @@ def tester1():
 def tester2(): 
     print("Im some text")
 
-item = MenuItem("Option 1", tester1)
+testing1 = MenuItem("Yo", tester1)
+testing2 = MenuItem("text", tester2)
+testing3 = MenuItem("Option", print)
 
-menu = Menu()
-menu2 = Menu("Second Menu")
-menu2.add(MenuItem("Some flavor text", print))
-menu3 = Menu("Third Menu")
-menu2.add(menu3)
-menu.add(menu3)
+main_menu = Menu("Main Menu")
+main_menu.add(testing3)
 
-menu.add(item)
-menu.add(MenuItem("Option 2", tester2))
-menu.add(menu2) #you can either pass in a menu with a customized option text or just pass it in plain to use it's title text
+second_menu = Menu("Second Menu")
+second_menu.add(testing1)
+second_menu.add(testing2)
 
-menuManager = MenuManager(menu)
+main_menu.add(MenuItem("Fun Times Menu", second_menu))
+
+menuManager = MenuManager(main_menu)
 menuManager.run()
