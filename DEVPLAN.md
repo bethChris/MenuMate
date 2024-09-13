@@ -13,6 +13,11 @@ MVp++: chaining menus
 MVP+++: style
 
 
+#### Tools Needed:
+
+- `inspect` module for extracting the names of params of python functions (for input validation in input menu items)
+
+
 ### Plan:
 `Menu`: 
 
@@ -23,11 +28,6 @@ MVP+++: style
     - Run()
 
 Menu is in charge of running the selection loop. Displaying the menu and collecting user input, then calling a MenuItem's run method to begin whatever process is linked with the item.
-
-#### Tools Needed:
-
-- `inspect` module for extracting the names of params of python functions (for input validation in input menu items)
-
 
 ```python
 
@@ -59,9 +59,7 @@ class Menu():
         take input from user
             only accept input from options list
             
-
 ```
-
 
 `MenuItem`: 
 
@@ -100,12 +98,82 @@ class MenuItem():
 
 ```
 
+`MenuManager`: 
 
-## Structure
+    - main_menu > Menu object for the root menu
+    - history[] > Menu object stack of Menus that we have previously visted
+    - Run() > runs the main loop as long as the stack of menus is not empty
+
+
+MenuManager is in charge of running the main menu loop and invoking MenuItem functions. It will run the menu that is currently at the top of the history stack. It recieves the selection from the Menu its currently running, validates its not 'break' or 'quit' (which require special intervention) and then runs the selected MenuItem if everythings solid.
+
+
+
+```python
+class MenuManager():
+    def __init__(self, main_menu):
+        main_menu = the start menu
+        history = stack of menus (main menu is first)
+    
+    def run(self):
+       while stack is not empty
+        pop menu off stack
+        get action from menu
+        if action is not quit
+            if action is menuItem
+                push current menu back on stack
+                perform action
+            if action is a menu 
+                push current and next menu on stack
+            if action is back
+                dont put current menu back on stack
+        else
+            sys.quit 
+
+```
+
+### Menu Implementation
+You can build a Menu by defining a new Menu object and calling the menus add() method by passing in a MenuItem, which contains a text desription and an associated runnable. If you want to pass along another Menu as an option (to navigate to a new menu on a selection), you can pass in a Menu object itself as the function in the MenuItem object. 
+
+EXAMPLE USAGE: 
+```python
+### CUSTOM FUNCTIONS ###
+def tester1():
+    print("Whats up yooooo")
+
+def tester2(): 
+    print("Im some text")
+
+### TURNING FUNCTIONS INTO MENUITEMS ###
+testing1 = MenuItem("Yo", tester1)
+testing2 = MenuItem("text", tester2)
+
+### SETTING UP MENU OBJECTS ###
+main_menu = Menu("Main Menu")
+second_menu = Menu("Second Menu")
+
+### ADDING NORMAL MENUITEMS INTO EACH MENU ###
+main_menu.add(testing1)
+second_menu.add(testing2)
+
+### ADDING SECOND MENU TO MAIN MENU ###
+second_menu_option = MenuItem("Epic Second Menu", second_menu)
+main_menu.add(second_menu_option)
+
+### PASSING MAIN MENU TO MENU MANAGER OBJECT ###
+menu_manager = MenuManager(main_menu)
+
+### RUN MENU MANAGER ###
+menu_manager.run() 
+```
+
+
+## File Structure
 
 `__init__.py` - for setuptools
 
-`Menu.py` - for the Menu object
+`Menu.py` - for the Menu object which contains menuItems and built in selection validation
 
-`MenuItem.py` - for the MenuItem object
+`MenuItem.py` - for the MenuItem object which contains the selection text and the associated function
 
+`MenuManager.py` - the main driving class, contains menus and tracks history of menus

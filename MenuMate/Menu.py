@@ -8,27 +8,22 @@ class Menu():
         self.title = title
         self.quit_char = 'q'
         self.back_char = 'b'
-        self.option_count = 0
     
-    def add(self, menu_item, text=None):
-        if isinstance(menu_item, Menu):
+    def add(self, menu_item):
+        # TODO: is there a more elegant way to do this?
+        assert isinstance(menu_item, MenuItem), "Can only add MenuItem objects to Menu"
+
+        if isinstance(menu_item.func, Menu):
             # will check to see if any previous menus are pointing to it already 
-            # should this be a stack in run()? push on either this menu's run or the next menu? with back popping off the stack?
             # TODO: define what behavior is/isn't allowed
-            #   not allowed to loop
-            # this is probably not supposed to be here? Maybe MenuManager
-            if menu_item in self.previous_menu_stack:
+            #   not allowed to loop to previous menu or itself
+
+            if menu_item.func in self.previous_menu_stack:
                 sys.exit("Cannot have menu point to previous menu or itself!!")
             else:
-                menu_item.previous_menu_stack.append(self)
+                menu_item.func.previous_menu_stack.append(self)
             
-            option_text = text
-            if text == None:
-                option_text = menu_item.title
-            
-            self.menu_items.append(MenuItem(option_text, menu_item))
-        else:
-            self.menu_items.append(menu_item)
+        self.menu_items.append(menu_item)
 
     def display(self, descrs, options):
         longest_descr = max(len(max(descrs, key=len)), len(self.title))
@@ -55,7 +50,6 @@ class Menu():
 
         self.display(descrs, options)
 
-        # TODO: bethany work on this part here plz and thanks <3
         user_selection = input("Select option: ")
         while user_selection not in options:
             user_selection = input("Select option: ")
