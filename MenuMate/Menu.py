@@ -1,5 +1,4 @@
-from MenuItem import MenuItem
-import sys
+from MenuMate import MenuItem
 
 class Menu():
     def __init__(self, title="Menu"):
@@ -11,19 +10,21 @@ class Menu():
     
     def add(self, menu_item):
         # TODO: is there a more elegant way to do this?
-        assert isinstance(menu_item, MenuItem), "Can only add MenuItem objects to Menu"
-
+        if not isinstance(menu_item, MenuItem):
+            raise TypeError(f"Expected 'MenuItem', got '{type(menu_item).__name__}'")
+        
         if isinstance(menu_item.func, Menu):
             # will check to see if any previous menus are pointing to it already 
             # TODO: define what behavior is/isn't allowed
             #   not allowed to loop to previous menu or itself
 
-            if menu_item.func in self.previous_menu_stack:
-                sys.exit("Cannot have menu point to previous menu or itself!!")
+            if menu_item.func in self.previous_menu_stack or menu_item.func == self:
+                raise ValueError("Menu cannot point to a previous menu or itself!")
             else:
                 menu_item.func.previous_menu_stack.append(self)
             
         self.menu_items.append(menu_item)
+
 
     def display(self, descrs, options):
         longest_descr = max(len(max(descrs, key=len)), len(self.title))

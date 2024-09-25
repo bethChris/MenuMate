@@ -1,5 +1,4 @@
-from Menu import Menu
-from MenuItem import MenuItem
+from MenuMate import MenuItem, Menu
 import sys
 
 class MenuManager():
@@ -24,27 +23,3 @@ class MenuManager():
                     self.menu_stack.append(action.func)
                 else:
                     action.run()
-
-
-# TODO: turn all this junk into test cases
-def tester1():
-    print("Whats up yooooo")
-
-def tester2(): 
-    print("Im some text")
-
-testing1 = MenuItem("Yo", tester1)
-testing2 = MenuItem("text", tester2)
-testing3 = MenuItem("Option", print)
-
-main_menu = Menu("Main Menu")
-main_menu.add(testing3)
-
-second_menu = Menu("Second Menu")
-second_menu.add(testing1)
-second_menu.add(testing2)
-
-main_menu.add(MenuItem("Fun Times Menu", second_menu))
-
-menuManager = MenuManager(main_menu)
-menuManager.run()
