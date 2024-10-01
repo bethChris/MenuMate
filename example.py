@@ -1,27 +1,26 @@
+from MenuMate import MenuItem, Menu, MenuManager
+
 ### CUSTOM FUNCTIONS ###
-def tester1():
-    print("Whats up yooooo")
+# You write these #
+def ask_whats_up():
+    print("What's up? How was your day?")
 
-def tester2(): 
-    print("Im some text")
+def hello_world(): 
+    print("Hello World!")
 
-### TURNING FUNCTIONS INTO MENUITEMS ###
-testing1 = MenuItem("Yo", tester1)
-testing2 = MenuItem("text", tester2)
+### TURNING YOUR FUNCTIONS INTO MENU ITEMS ###
+option_1 = MenuItem("Ask Me What's Up", ask_whats_up)
+option_2 = MenuItem("Say Hello", hello_world)
 
-### SETTING UP MENU OBJECTS ###
+### SETTING UP A MENU OBJECT ###
 main_menu = Menu("Main Menu")
-second_menu = Menu("Second Menu")
 
-### ADDING NORMAL MENUITEMS INTO EACH MENU ###
-main_menu.add(testing1)
-second_menu.add(testing2)
+### ADDING MENU ITEMS INTO A MENU ###
+main_menu.add(option_1)
+main_menu.add(option_2)
 
-### ADDING SECOND MENU TO MAIN MENU ###
-second_menu_option = MenuItem("Epic Second Menu", second_menu)
-main_menu.add(second_menu_option)
-
-### PASSING MAIN MENU TO MENU MANAGER OBJECT ###
+### SETTING UP A MENU MANAGER OBJECT ###
+# pass your main menu into the menu manager #
 menu_manager = MenuManager(main_menu)
 
 ### RUN MENU MANAGER ###

@@ -9,7 +9,12 @@ def test_func_2():
     print("Im some text")
 
 class MenuItemTestCase(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.menuItem = MenuItem("Testing", test_func_2)
+    
+    def test_created_MenuItem(self):
+        assert self.menuItem.text == "Testing" 
+        assert self.menuItem.func == test_func_2
 
 class MenuTestCase(unittest.TestCase):
     def setUp(self):
@@ -55,4 +60,11 @@ class MenuTestCase(unittest.TestCase):
 
             
 class MenuManagerTestCase(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.main_menu = Menu("Main Menu") 
+        self.menuManager = MenuManager(self.main_menu)
+
+    def test_created_MenuManager(self):
+        assert self.menuManager.main_menu == self.main_menu
+        assert self.menuManager.menu_stack[0] == self.main_menu
+    

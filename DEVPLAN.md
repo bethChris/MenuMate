@@ -167,7 +167,6 @@ menu_manager = MenuManager(main_menu)
 menu_manager.run() 
 ```
 
-
 ## File Structure
 
 `__init__.py` - for setuptools
@@ -177,3 +176,16 @@ menu_manager.run()
 `MenuItem.py` - for the MenuItem object which contains the selection text and the associated function
 
 `MenuManager.py` - the main driving class, contains menus and tracks history of menus
+
+
+## Implementation Notes
+- I'm gonna need to learn how to call **handler functions** for the functionality I want to incorporate
+- setuptools require a `setup.py` with the package information to work
+- the code is split into 3 objects, splitting the functionality of the original `Menu` object into `Menu` and `MenuManager`.
+- `MenuManager` will be the main controller of the selections and keeping track of the chaining menus.
+- chaining Menus with history memory will work as long as there is no reference to a previous menu in a menu down the line. There's a "history" of where the user was last that the `MenuManager` will keep track of (via a stack). And a "back" button is included on Menus traveled to from another menu
+
+## Unit Testing
+For creating the unit tests, I'm focusing on testing small pieces of the functionality for each class. The major concerns are the checks in the Menu class and the implementation of input options in the MenuItem class that I'll be adding later. 
+
+As for the MenuItem and MenuManager classes as they are I'm struggling to find things to test for those. Currently I have tests ensuring the initialization of each class works but those might be removed later as I don't know if those are necessariily needed.
