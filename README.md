@@ -1,98 +1,186 @@
-# Python Library
+# Menu Mate
+Tired of spending way too much time setting up terminal menu's instead of just getting into making the code? Well I was, so I took all my old code used for making menu's in my college courses and made this python library. 
 
-This is the start of my own self-guided learning on how to make a python library from concept to creation to maintenence.
-
-## Goals
-
-1. Consolidate helpful code/functions I've created in the past for my own previous projects.
-2. Clean and polish up this code to make it easy to read and use
-3. Make it into a library that can be hosted on Pypi
-4. Create a CI/CD pipeline for maintence
-5. Make the documentation easily accessible and useful
- 
-## Tenetive Plans to Reach These Goals
-
-1. Research how creating a library works
-	- What tools will I need?
-	- What skills will I need to brush up on?
-
-2. Research what makes a library useful
-	- What libraries are in use currently?
-	- What are popular libraries? Why are they popular?
-
-3. Research the CI/CD pipeline
-	- What does this look like? How are they created?
-	- What purpose/goal does this have in my project?
-
-4. Comb through all projects, identify useful/not useful parts
-	- What functions of my previous projects could be used elsewhere?
-	- What made this project frustrating? What code did I create to ease that frustration?
-
-5. Combine functions, freshen up logic and create supporting functions
-	- What is the goal of this code?
-	- What usefulness does it have? How could we improve it's impact?
-
-6. (Continuous) Document!
-	- What struggles did I have? (educational)
-	- What pieces are unclear? (usability)
-	- What's the structure of this library? (usability)
-	- What are some examples of use? (usability)
-
-7. Setup maintence pipeline
-	- How do I plan to improve the project?
-	- How will I update the project? 
-	- What tests will it need to pass each iteration?
-	- How will I set up these tests?
-
-
-## Creating a Library
-When creating a library, it's important to decide which **version** of python we should build in. We're thinking of this library not only as a cool collection of code, but also a *useful* collection of code. We need to go back a few versions from what's currently out to make it usuable for already created projects.
-
-The most important thing to remember is that a library is meant to simplify and consolidate processes. The end result should be an easier way to do it than just creating the functionality from scratch. 
-
-Creating a libarary is:
-- creating a bunch of functions/features
-- putting them into a folder with an empty `__init__.py` file
-- using `setuptools`, `twine`, and `wheel` to set the project up for Pypi
-
-
-### Tools/Needs
-- Libraries: `setuptools`, `twine`, `wheel`
-- Github
-- Pypi and Test Pypi accounts
-- Python version 3.9
-- Virtual environment probably
+# Table O' Contents
+- [Installation](#installation)
+- [Feature Summary](#feature-summary)
+- [How to Use](#how-to-use)
+  - [Creating a Menu](#creating-a-menu)
+  - [Creating a Menu Item](#creating-a-menu-item)
+  - [Adding a Menu Item](#adding-a-menu-item)
+  - [Running a Menu](#running-a-menu)
+- [Example Code](#but-do-you-have-an-example-i-can-just-copy)
+- [Advanced Functionality](#advanced-funtionality-for-those-that-read-this-far)
+  - [Chaining Menus](#chaining-menus)
 
 
 
-## CI/CD Pipeline
+# Installation
+Assuming you have Python 3.9+ you should be able to install using pip:
 
-### What is it?
-- CI: Continuous Integration
-- CD: Continuous Development
+```bash
+$ pip install MenuMate
+```
 
-Basically, a processes to always be integrating new fixs/features and pushing out new releases. It is usually streamlined through workflows or steps for each change. For example:
+# Feature Summary
+This first version is all pretty standard menu functionality, but I do have plans to add more in the future!
 
-- make fixes to a library
-- push library to github
-- github actions run several tests defined by us
-- if tests pass, integrate changes
-- if integrate new changes push up to Pypi
-
-### How to Set Up?
-For the most part we will be utilizing Github Action Templates to set this processes up for our own project. So far i've identified the following info about getting that set up:
-
-- should be free for personal public repos
-- they have templates to choose from based on your repos contents
-- it will require setting up a YML file and a /workflows folder
-- we can define what terminal commands to run and possibly set up tests to run/pass with pytest?
-
-> NOTE: Check out the bookmarks tab for this project! (Study/Python Library). I found a good tutorial for how to set up the continous integration/deployment pipeline through github actions. 
+- **Modular Design**: 2 modular classes and 1 driver class can be pieced together to build menus that fit your needs. 
+- **Input Validation**: Simple input validation ensures the user cannot select a non-existant menu option.
+- **Clean Layout**: We love it when everything is centered and justified dynamically.
+- **Chaining Menus**: Allows you to pass another Menu object as an option for a different Menu object. 
+- **Back Button**: Built in option on all menus that will allow users to go back to the previous menu.
 
 
-## Implementation Notes
-- I'm gonna need to learn how to call **handler functions** for the functionality I want to incorporate
-- setuptools require a `setup.py` with the package information to work
-- the code is split into 3 objects, splitting the functionality of the original `Menu` object into `Menu` and `MenuManager`.
-- `MenuManager` will be the main controller of the selections and keeping track of the chaining menus.
-- chaining Menus will work as long as there is no reference to a previous menu in a menu down the line. There's a "history" of where the user was last that the `MenuManager` will keep track of (via a stack). And a "back" button is included on Menus traveled to from another menu
+# How to Use
+## Creating a Menu
+To create a menu you need to create a Menu object. This object starts out super simple but will eventually hold all of our menu options called MenuItems. You can instantiate a Menu object and pass in an optional custom title.
+
+```python
+plain_generic_menu = Menu() # default title is "Menu"
+fancy_menu = Menu(title="The Fanciest of Menus Menu")
+```
+
+## Creating a Menu Item
+A menu isn't much help without something to select. To create a menu item you create a MenuItem object. This object is comprised of two parts:
+
+- **Text**: the flavor text you'd like to list on the menu for that option 
+- **Function**: the runnable function associated with your option. 
+
+>**NOTE**: Currently, runnable functions have to be paramater-less (or have all defaults set) in order to work. MenuItems that can take input will ideally be a later feature.
+
+```python
+option_1 = MenuItem(text="Golly, Pick Me!", func=my_cool_func)
+```
+
+Menu's are runnable! So you can create [**Chaining Menus**](#chaining-menus) by creating a MenuItem that has a Menu object as the function and then [adding that MenuItem](#adding-a-menu-item)
+
+```python
+second_menu = Menu(title="Second Menu")
+menu_option = MenuItem(text="To The Second Menu, Please!", func=second_menu)
+```
+
+## Adding a Menu Item
+To add an item to a Menu, you simply call the Menu's `add()` method and pass in a MenuItem object
+
+```python
+main_menu.add(menu_item=option_1)
+# or
+main_menu.add(menu_item=MenuItem("Click Me!", my_cool_func))
+```
+
+## Running a Menu
+Running this whole thing requires creating a MenuManager object and passing it your "main menu". A "main menu" is the first menu you'd like your users to see. 
+(To learn how to link many Menus together visit the [Chaining Menus](#chaining-menus) section)
+
+Then you can call the MenuManager's `run()` method to begin running your Menu setup.
+
+```python 
+# pass in your first menu 
+menu_manager = MenuManager(main_menu=my_first_menu)
+
+# run
+menu_manager.run()
+```
+
+# But Do You Have an Example I Can Just Copy?
+Great question. Here's a simple working example of what this library can do:
+
+```python
+from MenuMate import MenuItem, Menu, MenuManager
+
+### CUSTOM FUNCTIONS ###
+# You write these #
+def ask_whats_up():
+    print("What's up? How was your day?")
+
+def hello_world(): 
+    print("Hello World!")
+
+### TURNING YOUR FUNCTIONS INTO MENU ITEMS ###
+option_1 = MenuItem(text="Ask Me What's Up", func=ask_whats_up)
+option_2 = MenuItem(text="Say Hello", func=hello_world)
+
+### SETTING UP A MENU OBJECT ###
+main_menu = Menu(title="Main Menu")
+
+### ADDING MENU ITEMS INTO A MENU ###
+main_menu.add(menu_item=option_1)
+main_menu.add(menu_item=option_2)
+
+### SETTING UP A MENU MANAGER OBJECT ###
+# pass your main menu into the menu manager #
+menu_manager = MenuManager(main_menu=main_menu)
+
+### RUN MENU MANAGER ###
+menu_manager.run() 
+```
+Which will produce this output:
+
+![Screenshot of code output in the terminal. Displays a menu with 2 options and a quit option. ](images/MenumateEx1.jpg "Code Output")
+
+
+# Advanced Funtionality For Those That Read This Far:
+Welcome. At this point there is not much "advanced" functionality but this is a spot for pieces of functionality I feel need a bit more explanation.
+
+## Chaining Menus
+This was something I needed a lot for projects where I needed some menu items to lead to different menus with more options for customizing how the code would be ran. Whatever *your* use case is, this is a breakdown of how that works.
+
+### Adding a Menu
+As described in the [Creating a Menu Item](#creating-a-menu-item) section, adding a Menu as an option to a different Menu is as simple as creating a MenuItem object that contains a Menu object as the function, then adding the MenuItem like normal to the different Menu.
+
+A couple limitations exist with this functionality:
+1. Menu's cannot have a MenuItem that leads to a prior Menu. 
+> **Ex**: If Menu A goes to Menu B then Menu B cannot have an option that leads to Menu A again. 
+
+2. Menu's cannot have a MenuItem that leads back to itself. 
+> **Ex**: Menu A cannot have an option that goes to Menu A
+
+Both of these limitations exist to ensure the back button feature works properly. This still allows for many Menu's to lead to the same Menu, just not for that end Menu to include an option to go to any Menu that points to it.
+
+>**Ex**: Menu A, Menu B, and Menu C all have an option to go to Menu D, but Menu D cannot have any option that leads to Menu A, Menu B or Menu C.
+
+### The One Where You Just Copy and Paste
+Here is another annotated code example. This one shows how to turn a Menu into a MenuItem and what the output might look like.
+
+```python
+from MenuMate import MenuItem, Menu, MenuManager
+
+### CUSTOM FUNCTIONS ###
+# You write these #
+def a_simple_lad():
+    print("Salt is spicy")
+    
+def peak_musical_genius():
+    print("Ring-ding-ding-ding-dingeringeding!")
+
+### SETTING UP MENU OBJECTS ###
+main_menu = Menu(title="Main Menu")
+second_menu = Menu(title="Nifty Second Menu")
+
+### TURNING YOUR FUNCTIONS INTO MENU ITEMS ###
+option_1 = MenuItem(text="Hot Take", func=a_simple_lad)
+option_2 = MenuItem(text="What Does the Fox Say?", func=peak_musical_genius)
+
+### ADDING MENU ITEMS INTO THE MENUS ###
+main_menu.add(menu_item=option_1)
+second_menu.add(menu_item=option_2)
+
+### TURNING A MENU INTO A MENU ITEM ###
+# the ~advanced~ part of this example #
+second_menu_option = MenuItem(text="Show Me The Second Menu", func=second_menu)
+
+### ADDING ANOTHER MENU ITEM TO MAIN_MENU ###
+main_menu.add(menu_item=second_menu_option)
+
+### SETTING UP A MENU MANAGER OBJECT ###
+# pass your main menu into the menu manager #
+menu_manager = MenuManager(main_menu=main_menu)
+
+### RUN MENU MANAGER ###
+menu_manager.run()
+```
+This produces the output:
+
+![Screenshot of code output in the terminal. Displays a menu with an option to visit another menu. ](images/MenumateEx2.jpg "Code Output")
+
