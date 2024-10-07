@@ -19,7 +19,7 @@ Tired of spending way too much time setting up terminal menu's instead of just g
 Assuming you have Python 3.9+ you should be able to install using pip:
 
 ```bash
-$ pip install MenuMate
+$ pip install [whatever it is on PyPi cuz it's not uploaded yet]
 ```
 
 # Feature Summary
