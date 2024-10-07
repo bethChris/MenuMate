@@ -117,7 +117,7 @@ menu_manager.run()
 ```
 Which will produce this output:
 
-![Screenshot of code output in the terminal. Displays a menu with 2 options and a quit option. ](images/MenumateEx1.jpg "Code Output")
+![Screenshot of code output in the terminal. Displays a menu with 2 options and a quit option. ](images/MenuMateEx1.jpg)
 
 
 # Advanced Funtionality For Those That Read This Far:
@@ -182,5 +182,5 @@ menu_manager.run()
 ```
 This produces the output:
 
-![Screenshot of code output in the terminal. Displays a menu with an option to visit another menu. ](images/MenumateEx2.jpg "Code Output")
+![Screenshot of code output in the terminal. Displays a menu with an option to visit another menu. ](images/MenuMateEx2.jpg)
 
