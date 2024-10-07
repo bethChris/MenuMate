@@ -1,5 +1,4 @@
 from MenuMate import MenuItem, Menu
-import sys
 
 class MenuManager():
     def __init__(self, main_menu):
@@ -15,11 +14,10 @@ class MenuManager():
                 prev_menu = self.menu_stack[-1]
             action = cur_menu.run(prev_menu)
             
-            if action == cur_menu.quit_char:
-                sys.exit()
-            elif action != cur_menu.back_char:
-                self.menu_stack.append(cur_menu)
-                if isinstance(action.func, Menu):
-                    self.menu_stack.append(action.func)
-                else:
-                    action.run()
+            if action != cur_menu.quit_char:
+                if action != cur_menu.back_char:
+                    self.menu_stack.append(cur_menu)
+                    if isinstance(action.func, Menu):
+                        self.menu_stack.append(action.func)
+                    else:
+                        action.run()
