@@ -1,4 +1,4 @@
-# Menu Mate
+# MenuMate
 Tired of spending way too much time setting up terminal menu's instead of just getting into making the code? Well I was, so I took all my old code used for making menu's in my college courses and made this python library. 
 
 # Table O' Contents
@@ -19,7 +19,7 @@ Tired of spending way too much time setting up terminal menu's instead of just g
 Assuming you have Python 3.9+ you should be able to install using pip:
 
 ```bash
-$ pip install [whatever it is on PyPi cuz it's not uploaded yet]
+$ pip install MenuMate
 ```
 
 # Feature Summary
@@ -117,7 +117,7 @@ menu_manager.run()
 ```
 Which will produce this output:
 
-![Screenshot of code output in the terminal. Displays a menu with 2 options and a quit option. ](images/MenuMateEx1.jpg)
+![Screenshot of code output in the terminal. Displays a menu with 2 options and a quit option. ](https://github.com/bethChris/MenuMate/blob/main/images/MenuMateEx1.jpg?raw=true)
 
 
 # Advanced Funtionality For Those That Read This Far:
@@ -182,5 +182,5 @@ menu_manager.run()
 ```
 This produces the output:
 
-![Screenshot of code output in the terminal. Displays a menu with an option to visit another menu. ](images/MenuMateEx2.jpg)
+![Screenshot of code output in the terminal. Displays a menu with an option to visit another menu. ](https://github.com/bethChris/MenuMate/blob/main/images/MenuMateEx2.jpg?raw=true)
 
