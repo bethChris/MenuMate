@@ -19,9 +19,12 @@ setup(
     description="Modular Terminal Menu Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="",
+    url="https://github.com/bethChris/MenuMate",
+    # project_urls={
+    #     'Documentation': '',  # adding readthedocs link in the future
+    # },
     author="Bethany Christensen",
-    # author_email="bethiehc@email.com",
+    author_email="bethiehc@gmail.com",
     license="MIT",
     classifiers=[
         "Intended Audience :: Developers",

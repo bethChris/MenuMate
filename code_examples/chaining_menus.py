@@ -1,4 +1,5 @@
 from MenuMate import MenuItem, Menu, MenuManager
+# shows how to create Chaining Menus
 
 ### CUSTOM FUNCTIONS ###
 # You write these #

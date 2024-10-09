@@ -1,4 +1,5 @@
-from MenuMate import MenuItem, Menu, MenuManager
+from MenuMate import MenuItem, Menu, MenuManage
+# shows simple setup of a menu
 
 ### CUSTOM FUNCTIONS ###
 # You write these #
