@@ -1,6 +1,9 @@
 # MenuMate
 Tired of spending way too much time setting up terminal menu's instead of just getting into making the code? Well I was, so I took all my old code used for making menu's in my college courses and made this python library. 
 
+
+Feel free to check out the [Github Repo](https://github.com/bethChris/MenuMate) for a better documentation experience until I can get ReadTheDocs setup!
+
 # Table O' Contents
 - [Installation](#installation)
 - [Feature Summary](#feature-summary)
@@ -16,7 +19,7 @@ Tired of spending way too much time setting up terminal menu's instead of just g
 
 
 # Installation
-Assuming you have Python 3.9+ you should be able to install using pip:
+Assuming you have Python 3.x+ you should be able to install using pip:
 
 ```bash
 $ pip install MenuMate
