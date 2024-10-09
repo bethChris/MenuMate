@@ -24,7 +24,14 @@ jobs:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
     steps:
-      # retrieve your distributions here
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # download build artifacts desposited by test-release.yml
+      - name: Download distribution files
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
