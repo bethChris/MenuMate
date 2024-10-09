@@ -29,6 +29,11 @@ jobs:
     - name: Build package
       run: python -m build
       # publish package to testpypi
+    - name: Upload distribution files
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/
     - name: Publish package distributions to TestPyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
