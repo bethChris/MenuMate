@@ -24,14 +24,16 @@ jobs:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # download build artifacts desposited by test-release.yml
-      - name: Download distribution files
-        uses: actions/download-artifact@v3
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v3
         with:
-          name: dist
-
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+      - name: Build package
+        run: python -m build
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
